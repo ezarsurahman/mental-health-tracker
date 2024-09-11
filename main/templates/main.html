@@ -1,8 +1,61 @@
+{% extends 'base.html' %}
+{% block meta %}
+<link rel="stylesheet" href="./styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+    * {
+    font-family: 'Poppins';
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>
+{% endblock meta %}
+{% block content %}
 <h1>Mental Health Tracker</h1>
 
 <h5>NPM: </h5>
-<p>{{npm}}</p> <!-- Ubah sesuai dengan npm kamu -->
-<h5>Name: </h5>
-<p>{{name}}</p> <!-- Ubah sesuai dengan nama kamu -->
-<h5>Class: </h5>
-<p>{{class}}</p> <!-- Ubah sesuai dengan kelas kamu -->
+<p>{{ npm }}<p>
+
+<h5>Name:</h5>
+<p>{{ name }}</p>
+
+<h5>Class:</h5>
+<p>{{ class }}</p>
+
+{% if not mood_entries %}
+<p>Belum ada data mood pada mental health tracker.</p>
+{% else %}
+<table>
+  <tr>
+    <th>Mood Name</th>
+    <th>Time</th>
+    <th>Feeling</th>
+    <th>Mood Intensity</th>
+  </tr>
+
+  {% comment %} Berikut cara memperlihatkan data mood di bawah baris ini 
+  {% endcomment %} 
+  {% for mood_entry in mood_entries %}
+  <tr>
+    <td>{{mood_entry.mood}}</td>
+    <td>{{mood_entry.time}}</td>
+    <td>{{mood_entry.feelings}}</td>
+    <td>{{mood_entry.mood_intensity}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<br />
+
+<a href="{% url 'main:create_mood_entry' %}">
+  <button>Add New Mood Entry</button>
+</a>
+{% endblock content %}
+
